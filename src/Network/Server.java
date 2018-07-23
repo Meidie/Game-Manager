@@ -1,10 +1,13 @@
+package Network;
+
+import Objects.Game;
+
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 public class Server implements Runnable {
 
-    private final int port=0;
+    private final int port;
     private ServerSocket listener;
 
 
@@ -14,22 +17,13 @@ public class Server implements Runnable {
 
         listener = new ServerSocket(port);
         System.out.println("SERVER ide na porte : " + port);
+        run();
 
     }
 
 
 
-    public void tah(int location, Player player) {
-        /*
-        if (player == currentPlayer && board[location] == null) {
-            board[location] = currentPlayer;
-            currentPlayer = currentPlayer.opponent;
-            currentPlayer.otherPlayerMoved(location);
-            return true;
-        }
-        return false;
-*/
- }
+
 
     @Override
     public void run() {
@@ -39,6 +33,7 @@ public class Server implements Runnable {
                 Game game = new Game();
                 Worker x = new Worker(listener.accept(),'X',game);
                 Worker o = new Worker(listener.accept(),'O',game);
+                System.out.println("test");
                 x.opponent=o;
                 o.opponent=x;
                 x.run();

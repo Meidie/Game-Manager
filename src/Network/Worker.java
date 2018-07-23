@@ -1,5 +1,10 @@
+package Network;
+
+import Objects.Game;
+
 import java.net.*;
 import java.io.*;
+
 
 public class Worker implements Runnable {
     private String meno;
