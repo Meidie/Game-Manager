@@ -21,3 +21,9 @@
 4. Class Server
 * moznost odosielat a primat spravy (pripadne objekty) 
 * M zmenu nastavenia hry (velkost plochy)
+
+
+#TODO 24.7.2018
+* static M - imput od uzivatela ci chce server alebo client   (napr  1- server  0 - client )
+* static M - imput (int) pre port     ps skratky ak sa zada napr 0 -> tak posli 300000
+* static M - imput (String) pre IP    ps skratka ak sa zada 0 daj localhost 
