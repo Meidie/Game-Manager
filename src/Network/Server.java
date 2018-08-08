@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 
 public class Server extends Thread {
 
-    private final int port;
+    private int port;
     private ServerSocket listener;
     private Game game;
 
@@ -43,5 +43,22 @@ public class Server extends Thread {
                 e.printStackTrace();
             }
         }
+    }
+
+
+    public static Message init_message(Game game, String znak)
+    {
+        Message message = new Message("I");
+        message.setMsg1(znak);
+        //TODO i001 odkaz kto je na tahu
+        message.setMsg2("X");
+        message.setX(game.getHeight());
+        message.setY(game.getWidth());
+        Server.log("INIT");
+        return message;
+    }
+
+    public static void log(String message) {
+        System.out.println("SERVER: " + message);
     }
 }

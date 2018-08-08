@@ -10,6 +10,7 @@ public class Message implements Serializable {
     private int y;
 
 
+
     public Message(String flag_i) {
         flag = flag_i;
     }

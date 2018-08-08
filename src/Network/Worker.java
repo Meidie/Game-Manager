@@ -32,17 +32,20 @@ public class Worker extends Thread {
         }
     }
 
+    private void sendMessage(Message msg)
+    {
+        try {
+            outputStream.writeObject(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
     public void run() {
         try {
 
-            Message init = new Message("I");
-            init.setMsg1(znak);
-            //TODO i001 odkaz kto je na tahu
-            init.setMsg2("X");
-            init.setX(game.getHeight());
-            init.setY(game.getWidth());
-            System.out.println("SERVER: INIT");
-            outputStream.writeObject(init);
+            sendMessage(Server.init_message(game,znak));
 
             //TODO zmena poradia hraca
 
