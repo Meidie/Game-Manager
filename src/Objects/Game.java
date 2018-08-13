@@ -50,6 +50,31 @@ public class Game {
         printArray();
     }
 
+    public void setSur(int x,int y)
+    {
+         x = InputFromKeyboard.readInt("si na tahu/nzadaj riadok");
+         y = InputFromKeyboard.readInt("zadaj stlpec");
+    }
+
+
+    public void createTurn()
+    {
+        int x = -1;
+        int y = -1;
+      while (checksur) {
+          setSur(x, y);
+      }
+
+      checkBoard(x,y);
+
+
+
+
+
+
+
+    }
+
     public void printArray() {
         System.out.println("\n" + Arrays.deepToString(playBoard).
                 replace("], ", "]\n").
