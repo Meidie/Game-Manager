@@ -50,30 +50,37 @@ public class Game {
         naTahu = naTahu_i;
         this.playBoard = new char[width][height];
         printArray();
+        if (naTahu==znak)
+        {
+            createTurn();
+        }
     }
 
-    public void setSur(int x,int y)
+    public int setX()
     {
-         x = InputFromKeyboard.readInt("si na tahu/nzadaj riadok");
-         y = InputFromKeyboard.readInt("zadaj stlpec");
+         int x = InputFromKeyboard.readInt("si na tahu/nzadaj riadok");
+         return x;
+    }
+    public int setY()
+    {
+        int y = InputFromKeyboard.readInt("zadaj stlpec");
+        return y;
     }
 
 
     public void createTurn()
     {
-        int x = -1;
-        int y = -1;
-      while (checksur) {
-          setSur(x, y);
+        int x = 0;
+        int y = 0;
+       boolean check = false;
+      while (!check) {
+          x = setX();
+          y = setY();
+          check = testPoint(x,y,'0');
       }
-
-      checkBoard(x,y);
-
-
-
-
-
-
+      //TODO zmenit znak na char
+        playBoard[x][y]=znak.charAt(0);
+      System.out.println(checkBoard_T(x,y,3));
 
     }
 

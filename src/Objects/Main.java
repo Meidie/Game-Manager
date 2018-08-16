@@ -7,13 +7,14 @@ import java.io.IOException;
 
 public class Main {
 
+
    private char[][] playBoard;
     public static void main(String[] args) throws IOException {
 
 
 //  AK chces testovat check board odkomentuj toto a v game riadok 28. a zakomentuj vsetko ostatne dole co je tu
 
-   //     new Game();
+      //  new Game();
 
 
         //TODO lepsi sposob mozno nacitania a zapisu
