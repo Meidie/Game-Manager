@@ -7,13 +7,14 @@ import java.net.ServerSocket;
 
 public class Server extends Thread {
 
-    private final int port;
+    private int port;
     private ServerSocket listener;
-    private Game game;
-
+    private Game serverGame;
+    static private Server server = null;
     public Server(int port_i) throws IOException {
+        server = this;
         port = port_i;
-        game = new Game();
+        serverGame = Game.initTicTacToe();
         listener = new ServerSocket(port);
         System.out.println("SERVER ide na porte : " + port);
     }
@@ -25,8 +26,8 @@ public class Server extends Thread {
             while (true) {
                 Worker x;
                 Worker o;
-                x = new Worker(listener.accept(), "X", game);
-                o = new Worker(listener.accept(), "O", game);
+                x = new Worker(listener.accept(), 'X');
+                o = new Worker(listener.accept(), 'O');
                 x.start();
                 o.start();
                 x.opponent = o;
@@ -43,5 +44,18 @@ public class Server extends Thread {
                 e.printStackTrace();
             }
         }
+    }
+
+    public Game getServerGame() {
+        return serverGame;
+    }
+
+    static Server getServer()
+    {
+        return server;
+    }
+
+    public static void log(String message) {
+        System.out.println("SERVER: " + message);
     }
 }
