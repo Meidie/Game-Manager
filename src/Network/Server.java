@@ -9,11 +9,12 @@ public class Server extends Thread {
 
     private int port;
     private ServerSocket listener;
-    private Game game;
-
+    private Game serverGame;
+    static private Server server = null;
     public Server(int port_i) throws IOException {
+        server = this;
         port = port_i;
-        game = new Game();
+        serverGame = Game.initTicTacToe();
         listener = new ServerSocket(port);
         System.out.println("SERVER ide na porte : " + port);
     }
@@ -25,8 +26,8 @@ public class Server extends Thread {
             while (true) {
                 Worker x;
                 Worker o;
-                x = new Worker(listener.accept(), "X", game);
-                o = new Worker(listener.accept(), "O", game);
+                x = new Worker(listener.accept(), 'X');
+                o = new Worker(listener.accept(), 'O');
                 x.start();
                 o.start();
                 x.opponent = o;
@@ -45,17 +46,13 @@ public class Server extends Thread {
         }
     }
 
+    public Game getServerGame() {
+        return serverGame;
+    }
 
-    public static Message init_message(Game game, String znak)
+    static Server getServer()
     {
-        Message message = new Message("I");
-        message.setMsg1(znak);
-        //TODO i001 odkaz kto je na tahu
-        message.setMsg2("X");
-        message.setX(game.getHeight());
-        message.setY(game.getWidth());
-        Server.log("INIT");
-        return message;
+        return server;
     }
 
     public static void log(String message) {

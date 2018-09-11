@@ -1,5 +1,7 @@
 package Network;
 
+import Network.MessageTypes.InitMessage;
+import Network.MessageTypes.Message;
 import Objects.Game;
 
 import java.io.*;
@@ -12,8 +14,8 @@ public class Client implements Runnable {
     int port;
     String IP;
     String znak;
-    public ObjectInputStream in = null;
-    public ObjectOutputStream out = null;
+    static public ObjectInputStream in = null;
+    static public ObjectOutputStream out = null;
 
     public Client(String IP_i, int port_i) {
         IP = IP_i;
@@ -29,24 +31,33 @@ public class Client implements Runnable {
 
     }
 
+    public static synchronized void send_message(Message msg_i) {
+        try {
+            out.writeObject(msg_i);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void run() {
         try {
             while (true) {
                 Message msg = (Message) in.readObject();
 
                 switch (msg.getFlag()) {
-                    case "M":
+                    case 'M':
                         System.out.println("CLIENT test");
                         break;
-                    case "T":
-
+                    case 'T':
+                        game.update(msg);
 
                         break;
-                    case "I":
+                    case 'I':
+                        InitMessage message = (InitMessage) msg;
                         //TODO i001  natahu dorobit
-                        game = new Game(msg.getX(), msg.getY(), msg.getMsg1(), msg.getMsg2());
+                        game = new Game(message.getWidth(),message.getHeight(),message.getPlayerSymbol(),message.getOnTurnSymbol());
                         break;
-                    case "Q":
+                    case 'Q':
                         return;
                 }
             }
