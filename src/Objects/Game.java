@@ -22,7 +22,7 @@ public class Game {
 
         int height = InputFromKeyboard.readInt("Zadajte X-ovu velkost plochy");
         int width = InputFromKeyboard.readInt("Zadajte Y-ovu velkost plochy");
-        return (new Game(width,height,'S','X'));
+        return (new Game(width, height, 'S', 'X'));
     }
 
     public Game(int x, int y, char znak_i, char naTahu_i) {
@@ -52,13 +52,15 @@ public class Game {
         return y;
     }
 
-    public void update(Message msg) {
-        if (msg.getFlag() == 'T') {
-            TurnMessage message = (TurnMessage) msg;
+    public void update(Message msg, Boolean updateOnly) {
+        TurnMessage message = (TurnMessage) msg;
+        if (gameTurnCount + 1 == message.getGameTurnCount()) {
+            gameTurnCount++;
             playBoard[message.getWidthSur()][message.getHeightSur()] = message.getPlayerSymbol();
-            createTurn();
+            if (!updateOnly) {
+                createTurn();
+            }
         }
-
     }
 
 
@@ -74,12 +76,12 @@ public class Game {
         }
         //TODO zmenit znak na char
         playBoard[x][y] = znak;
-
+        gameTurnCount++;
         printArray();
         if (checkBoard_T(x, y, 3)) {
             Server.log("hrac " + znak + " vyhral");
         }
-        Client.send_message(TurnMessage.create(x,y,znak,0));
+        Client.sendMessage(TurnMessage.create(x, y, znak, gameTurnCount));
 
 
     }

@@ -11,6 +11,7 @@ public class Server extends Thread {
     private ServerSocket listener;
     private Game serverGame;
     static private Server server = null;
+
     public Server(int port_i) throws IOException {
         server = this;
         port = port_i;
@@ -50,12 +51,13 @@ public class Server extends Thread {
         return serverGame;
     }
 
-    static Server getServer()
-    {
+    static Server getServer() {
         return server;
     }
 
     public static void log(String message) {
-        System.out.println("SERVER: " + message);
+        if (Server.getServer() != null) {
+            System.out.println("SERVER: " + message);
+        }
     }
 }

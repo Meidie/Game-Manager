@@ -48,8 +48,10 @@ public class Worker extends Thread {
                         break;
                     case 'T':
                         TurnMessage message = (TurnMessage) msg;
-                        if (znak == message.getPlayerSymbol())  // kuk toto povodne bolo  == (!=) a fungovalo to aj ked nemalo :D
-                       opponent.sendMessage(msg);
+                        if (znak == message.getPlayerSymbol()) {
+                            Server.getServer().getServerGame().update(message,true);
+                            opponent.sendMessage(msg);
+                        }
                         break;
                     case 'Q':
                         opponent.outputStream.writeObject(msg);

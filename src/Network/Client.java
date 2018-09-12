@@ -31,7 +31,7 @@ public class Client implements Runnable {
 
     }
 
-    public static synchronized void send_message(Message msg_i) {
+    public static synchronized void sendMessage(Message msg_i) {
         try {
             out.writeObject(msg_i);
         } catch (IOException e) {
@@ -49,8 +49,7 @@ public class Client implements Runnable {
                         System.out.println("CLIENT test");
                         break;
                     case 'T':
-                        game.update(msg);
-
+                        game.update(msg,false);
                         break;
                     case 'I':
                         InitMessage message = (InitMessage) msg;
